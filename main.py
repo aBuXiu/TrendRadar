@@ -219,6 +219,7 @@ def clean_title(title: str) -> str:
     """清理标题中的特殊字符"""
     if not isinstance(title, str):
         title = str(title)
+    title = str(title) if title is not None else ""
     cleaned_title = title.replace("\n", " ").replace("\r", " ")
     cleaned_title = re.sub(r"\s+", " ", cleaned_title)
     cleaned_title = cleaned_title.strip()
@@ -503,7 +504,7 @@ class DataFetcher:
                     data = json.loads(response)
                     results[id_value] = {}
                     for index, item in enumerate(data.get("items", []), 1):
-                        title = item["title"]
+                        title = str(item.get("title", "")).strip()
                         url = item.get("url", "")
                         mobile_url = item.get("mobileUrl", "")
 
